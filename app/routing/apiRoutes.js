@@ -1,58 +1,43 @@
 var express = require('express');
+var friendsList = require('../data/friends')
 
 var api = express.Router();
 
-var friendsList = [
-	{
-  "name":"Aaron Rodgers",
-  "photo":"http://cdn0.sbnation.com/imported_assets/789745/x2011-August-26-22-2-46.jpg.pagespeed.ic.6yuBNan6w7.jpg",
-  "scores":[
-      5,
-      1,
-      4,
-      4,
-      5,
-      1,
-      2,
-      5,
-      4,
-      1
-    ]
-}, {
-  "name":"Superman",
-  "photo":"http://nerdist.com/wp-content/uploads/2017/01/action-comics-cv-977-224713.jpg",
-  "scores":[
-      1,
-      2,
-      5,
-      3,
-      4,
-      2,
-      3,
-      4,
-      5,
-      2
-    ]
-}, {
-  "name":"Spider-man",
-  "photo":"https://upload.wikimedia.org/wikipedia/en/2/21/Web_of_Spider-Man_Vol_1_129-1.png",
-  "scores":[
-      2,
-      5,
-      4,
-      3,
-      2,
-      4,
-      3,
-      5,
-      2,
-      1
-    ]
-}
-];
+
 
 api.get('/friends', function(req, res) {
-        res.json(friendsList);
+    res.json(friendsList);
+});
+
+api.post('/friends', function(req, res){
+	
+	var newUser = req.body
+	var newUserScoresArr = newUser.scores
+	var compareUsersArr = []
+	
+	for (var i=0; i<friendsList.length; i++){
+		
+		var totalDifference = 0;
+		
+		for (var x=0; x<friendsList[i].scores[x]; x++){
+			totalDifference += Math.abs(parseInt(newUserScoresArr[x]) - parseInt(friendsList[i].scores[x]));
+		}
+
+		compareUsersArr[i] = totalDifference;
+	}
+		
+	var matchScore = compareUsersArr[0];
+	var matchIndex = 0;
+
+	for (var i=0; i<compareUsersArr.length; i++) {
+		if(compareUsersArr[i] < matchScore) {
+				matchScore = compareUsersArr[i];
+				matchIndex = i;
+			}
+	}
+	friendsList.push(newUser);
+
+	res.json(friendsList[matchIndex]);
 });
 
 module.exports = api
