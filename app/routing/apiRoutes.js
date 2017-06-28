@@ -22,14 +22,11 @@ api.post('/friends', function(req, res){
 	for (var i=0; i<friendsList.length; i++){
 		// variable setting our totalDifference value to 0
 		var totalDifference = 0;
-		// for loop that will loop over the array of scores that is in each object of the 
-		// friends list array.
+		// for loop that will loop over the array of scores that is in each object of the friends list array.
+		// each time the loop iterates, we compare the score at the current index on the array newUserScoresArr
+		// to the scores array at the current index of friendsList, then subtract between the two. 
+		// having this inside Math.abs() will ensure we always receive a postive number
 		for (var x=0; x<friendsList[i].scores[x]; x++){
-			// each time the loop iterates, we compare the score at the current index on the array newUserScoresArr
-			// to the scores array at the current index of friendsList, then subtract the value found at
-			// the current index of the friendsList scores array from the newUserScoresArr array
-			// having this operation within Match.abs() will give us a positive number instead of a negative
-			// the result is then added to our totalDifference variable
 			totalDifference += Math.abs(parseInt(newUserScoresArr[x]) - parseInt(friendsList[i].scores[x]));
 		}
 		// we then push the new totalDifference value to the compareUsersArr array, which will represent how
@@ -42,19 +39,18 @@ api.post('/friends', function(req, res){
 	// default set to the first value in the array
 	var matchScore = compareUsersArr[0];
 	// variable for storing the match index, as the value at any index on the compareUsersArr array matches up with
-	// the indexes on the friendsList array, ex. the value at [2] on compareUsersArr represents where the user at [2] on
-	// friendsList compares to our new user posting ot the api
+	// the indexes on the friendsList array. 
 	var matchIndex = 0;
 	
 	// for loop iterating through the compareUsersArr to find our match
 	for (var i=0; i<compareUsersArr.length; i++) {
 		// if the value at the current index of compareUsersArr is less than the value of matchScore
+		// matchScore is then set to the value at the current index of compareUsersArr[i], as a lower
+		// score indicates a better match
+		// matchIndex is set to the value of i, so that we can use this value to 
+		// find the matching index on our friendsList array. 
 		if(compareUsersArr[i] < matchScore) {
-				// matchScore is set to the value at the current index of compareUsersArr[i], as a lower
-				// score indicates a better match 
 				matchScore = compareUsersArr[i];
-				// matchIndex is set to the value of i, so that we can use this value to 
-				// find the matching index on our friendsList array.
 				matchIndex = i;
 			}
 	}
