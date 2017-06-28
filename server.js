@@ -5,7 +5,7 @@ var bodyParser = require("body-parser");
 var htmlRoutes = require('./app/routing/htmlRoutes');
 var apiRoutes = require('./app/routing/apiRoutes');
 
-var PORT = 8080;
+var PORT = process.env.PORT || 3000;
 
 var app = express();
 
