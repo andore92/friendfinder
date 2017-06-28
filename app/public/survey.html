@@ -16,6 +16,8 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.min.js"></script>
 
+	
+
 </head>
 <body>
 
@@ -238,11 +240,13 @@
 	    		// Grab the result from the AJAX post so that the best match's name and photo are displayed.
 	    		$("#matchName").text(data.name);
 	    		$('#matchImg').attr("src", data.photo);
-
+	    		$('#matchImg').addClass("img-responsive");
+	    		
 		    	// Show the modal with the best match 
 		    	$("#resultsModal").modal('toggle');
 
-	    	});
+	    	}); 
+
 		}
 		else
 		{

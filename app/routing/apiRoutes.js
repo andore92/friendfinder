@@ -23,7 +23,7 @@ api.post('/friends', function(req, res){
 			totalDifference += Math.abs(parseInt(newUserScoresArr[x]) - parseInt(friendsList[i].scores[x]));
 		}
 
-		compareUsersArr[i] = totalDifference;
+		compareUsersArr.push(totalDifference);
 	}
 		
 	var matchScore = compareUsersArr[0];
